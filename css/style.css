@@ -1,0 +1,21 @@
+div.jumbotron {
+	width: 400px;
+	margin: 0 auto;
+    font-size: 11px;
+    padding: 10px;
+}
+form input, form select, form button, .alert {
+    margin-bottom: 3px;
+}
+.ng-inactive {
+    display: none;
+}
+.selecionado {
+    background-color: yellow;
+}
+.negrito {
+    font-weight: bold;
+}
+footer{
+    text-align: center;
+}
