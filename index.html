@@ -4,23 +4,37 @@
 <meta charset="utf-8">
 <title>Lista Telefonica</title>
 
-<link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
-<script language="javascript" src="lib/angular/angular.js" /></script>
-<script language="javascript" src="lib/angular/angular-locale_pt-br.js" /></script>
-<script language="javascript" src="lib/bower-angular-messages-master/angular-messages.js" /></script>
-<script language="javascript" src="js/app.js" /></script>
+<script type="text/javascript" src="lib/angular/angular.js" /></script>
+<script type="text/javascript" src="lib/angular/angular-locale_pt-br.js" /></script>
+<script type="text/javascript" src="lib/bower-angular-messages-master/angular-messages.js" /></script>
+<script type="text/javascript" src="lib/serialGenerator/serialGenerator.js"></script>
+<script type="text/javascript" src="lib/ui/ui.js"></script>
+<script type="text/javascript" src="js/app.js" /></script>
 <script type="text/javascript" src="js/controllers/listaTelefonicaCtrl.js"></script>
 <script type="text/javascript" src="js/services/contatosAPIService.js"></script>
 <script type="text/javascript" src="js/services/operadorasAPIService.js"></script>
 <script type="text/javascript" src="js/value/configValue.js"></script>
-<script type="text/javascript" src="js/services/serialGenerator.js"></script>
+
 <script type="text/javascript" src="js/config/serialGeneratorConfig.js"></script>
 <script type="text/javascript" src="js/filters/nameFilter.js"></script>
+<script type="text/javascript" src="js/filters/ellipsisFilter.js"></script>
+
 </head>
 <body ng-controller="listaTelefonicaCtrl">
     <div class="jumbotron">
+        <ui-accordions>
+            <ui-accordion title="Accordion 1">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </ui-accordion>
+
+            <ui-accordion title="Accordion 2">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </ui-accordion>
+        </ui-accordions>
+
         <h3>{{app}}</h3>
         {{message}}
         <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?"/>
@@ -36,7 +50,7 @@
             <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos track by $index | filter:criterioDeBusca | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao">
                 <td><input type="checkbox" ng-model="contato.selecionado"/></td>
                 <td>{{contato.serial}}</td>
-                <td>{{contato.nome | name}}</td>
+                <td title="{{contato.nome | name}}">{{contato.nome | name | ellipsis:12}}</td>
                 <td>{{contato.telefone}}</td>
                 <td>{{contato.operadora.nome}}</td>
                 <td>{{contato.data | date:'dd/MM/yyyy HH:mm'}}</td>
@@ -46,6 +60,8 @@
         <form name="contatoForm">
             <input class="form-control" type="text" ng-model="contato.nome" name="nome" placeholder="Nome" ng-required="true" ng-minlength="10"/>
             <input class="form-control" type="text" ng-model="contato.telefone" name="telefone" placeholder="Telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/"/>
+            {{contato.data}}
+            <input class="form-control" type="text" ng-model="contato.data" name="data" placeholder="Data" ui-Date />
             <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome + ' ( ' + (operadora.preco | currency) + ' )' for operadora in operadoras | orderBy:'nome'">
                 <option value="">Selecione uma operadora</option>
             </select>
